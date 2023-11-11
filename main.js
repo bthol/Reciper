@@ -68,31 +68,40 @@ function generateRecipes(r, ing) {
 
     // generate recipe string
     let recipe = "";
-    place.forEach((i) => {
-      // console.log(place[i]);
-      recipe += `${ing[place[i]]}, `;
-    })
+    for (let j = 0; j < pLen; j++) {
+      recipe += `${ing[place[j]]}, `;
+    }
     // add recipe string to recipes structure
     recipes.push(recipe);
 
-    // NEXT ITERATION
+    // console.log(recipe);
 
-    // increase last value of reference number in place structure
-    place[pLen - 1] = place[pLen - 1] + 1;
-    // adjust other values on condition
-    for (let i = pLen - 1; i >= 0; i--) {
-      if (place[i] === ingLen) {
-        
-        place[i - 1] = place[i - 1] + 1;
-        
-        place[i] = place[i - 1] + 1;
-        
-        console.log("pass");
-        
+    // NEXT ITERATION
+    if (i !== bound - 1) { // no need to prepare for next iteration on last
+      // conditionally increase last value of reference number in place structure
+      // console.log(place[pLen - 1]);
+      if (place[pLen - 1] !== ingLen) {
+        place[pLen - 1] = place[pLen - 1] + 1;
       }
+      // adjust other values on respective conditions
+      for (let j = pLen - 1; j >= 0; j--) {
+        if (place[j] === ingLen) {
+          place[j - 1] = place[j - 1] + 1;
+          if (place[j - 1] + 1 !== ingLen) {
+            // console.log("pass 1");
+            place[j] = place[j - 1] + 1;
+          } else {
+            // console.log("pass 2");
+            place[j - 2] = place[j - 2] + 1;
+            place[j - 1] = place[j - 2] + 1;
+            place[j] = place[j - 1] + 1;
+          }
+        }
+      }
+      // console.log(place);
+      // console.log(place[pLen -1]);
+      // console.log("next");
     }
-    console.log(place);
-    console.log("next");
   }
 
   return recipes;
