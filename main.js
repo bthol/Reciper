@@ -1,7 +1,7 @@
 const ipr = 3;
 
-// let ingredients = ["penut butter", "jelly", "hot dog buns", "chicaron beans", "country beans", "serrano peppers", "cheese", "rotini noodles", "ramen noodles", "worcestershire sauce", "chulula hot suace", "yellow mustard"];
-let ingredients = ["0", "1", "2", "3", ];
+let ingredients = ["penut butter", "jelly", "hot dog buns", "chicaron beans", "country beans", "serrano peppers", "cheese", "rotini noodles", "ramen noodles", "worcestershire sauce", "chulula hot suace", "yellow mustard"];
+// let ingredients = ["0", "1", "2", "3", ];
 
 const reject = [
   ["penut butter", "chulula hot sauce"],
@@ -103,12 +103,11 @@ function generateRecipes(r, ing) {
       // console.log("next");
     }
   }
-
+  // console.log(recipes);
   return recipes;
 };
 
 const recipes = generateRecipes(ipr, ingredients);
-console.log(recipes);
 
 const listRecipes = document.body.querySelector('#recipes-list');
 
@@ -120,4 +119,4 @@ function recipesDisplay(recipes) {
     listRecipes.appendChild(node);
   })
 };
-// recipesDisplay(recipes);
+recipesDisplay(recipes);
