@@ -112,8 +112,6 @@ function removeItem(item, arr) {
 
 function reject(r, rejections) {
   let recipes = r;
-  console.log(recipes);
-  console.log(rejections);
   let reject = []; // index of recipes to be removed
   for (let i = 0; i < recipes.length; i++) {
     const recipe = recipes[i];
@@ -129,23 +127,19 @@ function reject(r, rejections) {
       }
     }
   }
-  console.log(reject);
 
   for (let i = 0; i < reject.length; i++) {
-    // console.log(recipes[reject[i]]);
     recipes.splice(reject[i], 1);
-    // recipes = removeItem(reject[i], recipes);
   }
 
-  console.log(recipes);
   return recipes;
 };
 
 let recipes = generateRecipes(ipr, ingredients);
 recipes = reject(recipes, rejections);
 
-// const listIngredients = document.body.querySelector('#ingredients-list');
-// const listRecipes = document.body.querySelector('#recipes-list');
+const listIngredients = document.body.querySelector('#ingredients-list');
+const listRecipes = document.body.querySelector('#recipes-list');
 
 function ingredientsDisplay(ingredients) {
   ingredients.forEach((i) => {
@@ -165,5 +159,5 @@ function recipesDisplay(recipes) {
   })
 };
 
-// ingredientsDisplay(ingredients);
-// recipesDisplay(recipes);
+ingredientsDisplay(ingredients);
+recipesDisplay(recipes);
