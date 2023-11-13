@@ -10,18 +10,6 @@ const rejections = [
   // ["penut butter", "yellow mustard"],
 ];
 
-const listIngredients = document.body.querySelector('#ingredients-list');
-
-function ingredientsDisplay(ingredients) {
-  ingredients.forEach((i) => {
-    const node = document.createElement('li');
-    node.classList.add = "ingredient";
-    node.innerText = `${i}`;
-    listIngredients.appendChild(node);
-  })
-};
-ingredientsDisplay(ingredients);
-
 function randRange(min, max) {
   // calculate random number between a minimum and maximum
   const rand = Math.floor((Math.random() * (max - min)) + min);
@@ -42,6 +30,14 @@ function factorial(x) {
   }
   return factorial;
 };
+
+function permuation(n , r) {
+  // n total num of items
+  // r num items per combination
+  const x1 = factorial(n);
+  const x2 = factorial(n - r);
+  return x1 / x2;
+}
 
 function combination(n, r) {
   // n total num of items
@@ -102,7 +98,20 @@ function generateRecipes(r, ing) {
   return recipes;
 };
 
-function reject(recipes, rejections) {
+function removeItem(item, arr) {
+  let before = [];
+  if (item > 0) {
+    before = arr.slice(0, item);
+  }
+  let after = [];
+  if (after < arr.length - 1) {
+    after = arr.slice(item + 1, arr.length);
+  }
+  return before.concat(after);
+};
+
+function reject(r, rejections) {
+  let recipes = r;
   console.log(recipes);
   console.log(rejections);
   let reject = []; // index of recipes to be removed
@@ -116,18 +125,36 @@ function reject(recipes, rejections) {
         }
       }
       if (conjunct === rejections[l].length) {
-        reject.push(i);
+        reject.unshift(i);
       }
     }
   }
   console.log(reject);
 
+  for (let i = 0; i < reject.length; i++) {
+    // console.log(recipes[reject[i]]);
+    recipes.splice(reject[i], 1);
+    // recipes = removeItem(reject[i], recipes);
+  }
+
+  console.log(recipes);
   return recipes;
 };
 
-const recipes = reject(generateRecipes(ipr, ingredients), rejections);
+let recipes = generateRecipes(ipr, ingredients);
+recipes = reject(recipes, rejections);
 
-const listRecipes = document.body.querySelector('#recipes-list');
+// const listIngredients = document.body.querySelector('#ingredients-list');
+// const listRecipes = document.body.querySelector('#recipes-list');
+
+function ingredientsDisplay(ingredients) {
+  ingredients.forEach((i) => {
+    const node = document.createElement('li');
+    node.classList.add = "ingredient";
+    node.innerText = `${i}`;
+    listIngredients.appendChild(node);
+  })
+};
 
 function recipesDisplay(recipes) {
   recipes.forEach((recipe) => {
@@ -137,4 +164,6 @@ function recipesDisplay(recipes) {
     listRecipes.appendChild(node);
   })
 };
-recipesDisplay(recipes);
+
+// ingredientsDisplay(ingredients);
+// recipesDisplay(recipes);
