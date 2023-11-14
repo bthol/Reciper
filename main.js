@@ -3,7 +3,7 @@ const ipr = 3;
 // let ingredients = ["penut butter", "jelly", "hot dog buns", "chicaron beans", "country beans", "serrano peppers", "cheese", "rotini noodles", "ramen noodles", "worcestershire sauce", "chulula hot suace", "yellow mustard"];
 let ingredients = ["0", "1", "2", "3", "4"];
 
-const rejections = [
+let rejections = [
   ["2", "3"],
   ["0", "4"],
   // ["penut butter", "chulula hot sauce"],
@@ -140,6 +140,7 @@ recipes = reject(recipes, rejections);
 
 const listIngredients = document.body.querySelector('#ingredients-list');
 const listRecipes = document.body.querySelector('#recipes-list');
+const listRejections = document.body.querySelector('#rejections-list');
 
 function ingredientsDisplay(ingredients) {
   ingredients.forEach((i) => {
@@ -150,14 +151,32 @@ function ingredientsDisplay(ingredients) {
   })
 };
 
+function rejectionsDisplay(rejections) {
+  for (let i = 0; i < rejections.length; i++) {
+    const node = document.createElement('li');
+    node.classList.add = "rejection";
+    let rejection = "";
+    rejections[i].forEach((l) => {
+      rejection += `${l} `;
+    })
+    node.innerText = rejection;
+    listRejections.appendChild(node);
+  }
+};
+
 function recipesDisplay(recipes) {
-  recipes.forEach((recipe) => {
+  for (let i = 0; i < recipes.length; i++) {
     const node = document.createElement('li');
     node.classList.add = "recipe";
-    node.innerText = `${recipe}`;
+    let recipe = "";
+    recipes[i].forEach((r) => {
+      recipe += `${r} `;
+    })
+    node.innerText = recipe;
     listRecipes.appendChild(node);
-  })
+  }
 };
 
 ingredientsDisplay(ingredients);
+rejectionsDisplay(rejections);
 recipesDisplay(recipes);
