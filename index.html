@@ -3,25 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reciper</title>
-    <script defer src="./main.js"></script>
+    <title>Reciply</title>
+    <script defer src="./recipeBuilder.js"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+    <header>
+        <h1>Reciply</h1>
+        <div class="nav-menu">
+            <button id="recipe-builder-page-button">Recipe Builder</button>
+            <button id="recipe-finder-page-button">Recipe Finder</button>
+            <button id="my-recipes-page-button">My Recipes</button>
+        </div>
+    </header>
+    
+    <div id="recipe-builder-page">
 
-    <div>
-        <p><b>Ingredients</b></p>
-        <ul id="ingredients-list"></ul>
-    </div>
+        <h3>Recipe Builder</h3>
+        
+        <div>
+            <p><b>Ingredients</b></p>
+            <form id="form-ingredients" action="./" method="POST">
+                <input name="ingredient" type="text" required>
+                <button name="addIngredientButton" type="submit">+ ingredient</button>
+            </form>
+            <ul id="ingredients-list"></ul>
+        </div>
+        
+        
+        <div>
+            <p><b>Restrictions</b></p>
+            <form id="form-restrictions" action="./" method="POST">
+                <input name="ingredient1" type="text" required >
+                <input name="ingredient2" type="text" required >
+                <button name="addRestrictionButton" type="submit">- combination</button>
+            </form>
+            <ul id="restrictions-list"></ul>
+        </div>
+        
+        
+        <div>
+            <p><b>Recipes</b></p>
+            <form id="form-build-recipes" action="./" method="POST">
+                <label for="ipr">Ingredients per Recipe</label>
+                <input name="ipr" type="number" min="3" max="7" style="width: 35px">
+                <br><br>
+                <button type="submit">Build Recipes</button>
+            </form>
+            <ul id="recipes-list"></ul>
+        </div>
 
-    <div>
-        <p><b>Rejections</b></p>
-        <ul id="rejections-list"></ul>
-    </div>
-
-    <div>
-        <p><b>Recipes</b></p>
-        <ul id="recipes-list"></ul>
     </div>
 
 </body>
