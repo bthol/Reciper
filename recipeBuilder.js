@@ -211,19 +211,21 @@ function updateDisplay() {
   recipesDisplay(recipes);
 };
 
+// Dynamic
 formIngredients.addEventListener('submit', (e) => {
   e.preventDefault();
+  const ing = formIngredients.ingredient.value;
   // test for duplicate
   let duplicates = false;
-  ingredients.forEach((ing) => {
-    if (formIngredients.ingredient.value === ing) {
+  for (let i = 0; i < listIngredients.childNodes.length; i++){
+    if (ing === listIngredients.childNodes[i].textContent) {
       duplicates = true;
     }
-  })
+  }
   if (!duplicates) {
-    ingredients.push(formIngredients.ingredient.value);
+    ingredients.push(ing);
     if (ingredients.length < 8) {
-      console.log(formBuildRecipes.ipr.getAttribute('max'));
+      // console.log(formBuildRecipes.ipr.getAttribute('max'));
       // formBuildRecipes.ipr.setAttrbiute('max', `${ingredients.length}`);
     }
     ingredientsDisplay(ingredients);
@@ -234,16 +236,28 @@ formIngredients.addEventListener('submit', (e) => {
 
 formRestrictions.addEventListener('submit', (e) => {
   e.preventDefault();
-  // test for duplicates
-  restrictions.forEach((restriction) => {
-
-  });
-  let duplicates = false;
-  if (!duplicates) {
-    restrictions.push([formRestrictions.ingredient1.value, formRestrictions.ingredient2.value])
-    restrictionsDisplay(restrictions);
+  // test for duplicates in restriction
+  if (formRestrictions.ingredient1.value !== formRestrictions.ingredient2.value){
+    // test for duplicates restrtiction
+    let duplicates = false;
+    for (let i = 0; i < restrictions.length; i++) {
+      const a = new RegExp(`${restrictions[i][0]}`);
+      const b = new RegExp(`${restrictions[i][1]}`);
+      for (let j = 0; j < listRestrictions.childNodes.length; j++){
+        const restriction = listRestrictions.childNodes[j].textContent;
+        if (a.test(restriction) && b.test(restriction)) {
+          duplicates = true;
+        }
+      }
+    }
+    if (!duplicates) {
+      restrictions.push([formRestrictions.ingredient1.value, formRestrictions.ingredient2.value])
+      restrictionsDisplay(restrictions);
+    } else {
+      alert("Duplicate restrictions detected! Only add new restrictions.");
+    }
   } else {
-    alert("Duplicate restrictions detected! Only add new restrictions.");
+    alert("Duplicates ingredients in restriction detected! Only add restrictions with two different ingredients.");
   }
 });
 
