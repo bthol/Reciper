@@ -56,13 +56,14 @@ function generateRecipes(ipr, ing) {
     }
     const pLen = place.length;
   
-    // calculate length of permuation calculation
+    // calculate number of combinations A.K.A. number of recipes
     const bound = combination(ingLen, ipr);
   
     // iterate that many times
     for (let i = 0; i < bound; i++) {
-      // CURRENT ITERATION
-  
+      // 
+      // CURRENT ITERATION //
+      // 
       // generate recipe
       let recipe = [];
       for (let j = 0; j < pLen; j++) {
@@ -70,23 +71,29 @@ function generateRecipes(ipr, ing) {
       }
       // add recipe to recipes structure
       recipes.push(recipe);
-  
-      // NEXT ITERATION
+      console.log(place);
+      // 
+      // NEXT ITERATION //
+      // 
       if (i !== bound - 1) { // no need to prepare for next iteration on last
-        // conditionally increase last value of reference number in place structure
-        if (place[pLen - 1] !== ingLen) {
-          place[pLen - 1] = place[pLen - 1] + 1;
-        }
-        // adjust other values on respective conditions
-        for (let j = pLen - 1; j >= 0; j--) {
-          if (place[j] === ingLen) {
-            place[j - 1] = place[j - 1] + 1;
-            if (place[j - 1] + 1 !== ingLen) {
-              place[j] = place[j - 1] + 1;
-            } else {
-              place[j - 2] = place[j - 2] + 1;
-              place[j - 1] = place[j - 2] + 1;
-              place[j] = place[j - 1] + 1;
+        // if last value in place is not exceeding the length of the ingredients list
+        if (place[pLen - 1] + 1 < ingLen) {
+          // then increase last value in place structure by one
+          place[pLen - 1] += 1;
+        } else {
+          for (let j = pLen - 2; j >= 0; j--) {
+            // testing from the penultimate number in place and moving backward
+            // if maximum possible number in place = ingLen
+            // minus the distance from that number to the end of place = (pLen - 1 - j)
+            // is greater than the value in place plus one = place[j] + 1
+            if (ingLen - (pLen - 1 - j) > place[j] + 1) {
+              // then increase that number in place by 1
+              place[j] += 1;
+              // and change all numbers after that number in place to increase by one each time
+              for (let l = 0; l <= (pLen - 1 - j); l++) {
+                place[j + l] = place[j] + l;
+              }
+              break
             }
           }
         }
@@ -224,10 +231,6 @@ formIngredients.addEventListener('submit', (e) => {
   }
   if (!duplicates) {
     ingredients.push(ing);
-    if (ingredients.length < 8) {
-      // console.log(formBuildRecipes.ipr.getAttribute('max'));
-      // formBuildRecipes.ipr.setAttrbiute('max', `${ingredients.length}`);
-    }
     ingredientsDisplay(ingredients);
   } else {
     alert("Duplicate ingredients detected! Only add new ingredients.")
@@ -238,7 +241,7 @@ formRestrictions.addEventListener('submit', (e) => {
   e.preventDefault();
   // test for duplicates in restriction
   if (formRestrictions.ingredient1.value !== formRestrictions.ingredient2.value){
-    // test for duplicates restrtiction
+    // test for duplicate restrtictions
     let duplicates = false;
     for (let i = 0; i < restrictions.length; i++) {
       const a = new RegExp(`${restrictions[i][0]}`);
