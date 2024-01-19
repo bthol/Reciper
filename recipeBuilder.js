@@ -71,7 +71,7 @@ function generateRecipes(ipr, ing) {
       }
       // add recipe to recipes structure
       recipes.push(recipe);
-      console.log(place);
+
       // 
       // NEXT ITERATION //
       // 
@@ -100,7 +100,7 @@ function generateRecipes(ipr, ing) {
       }
     }
   } else {
-    alert("Number of ingredients per recipe cannot exceed total number of ingredients. Please, add more ingredients.")
+    alert("Number of ingredients per recipe cannot exceed total number of ingredients. Please, reduce number of ingredients per recipe or add more ingredients.")
   }
   return recipes;
 };
@@ -244,8 +244,8 @@ formRestrictions.addEventListener('submit', (e) => {
     // test for duplicate restrtictions
     let duplicates = false;
     for (let i = 0; i < restrictions.length; i++) {
-      const a = new RegExp(`${restrictions[i][0]}`);
-      const b = new RegExp(`${restrictions[i][1]}`);
+      const a = new RegExp(formRestrictions.ingredient1.value);
+      const b = new RegExp(formRestrictions.ingredient2.value);
       for (let j = 0; j < listRestrictions.childNodes.length; j++){
         const restriction = listRestrictions.childNodes[j].textContent;
         if (a.test(restriction) && b.test(restriction)) {
